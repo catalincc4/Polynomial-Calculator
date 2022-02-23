@@ -1,16 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PrimaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="365.0" style="-fx-background-color: #d6c3ef;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.Controller">
    <children>
-      <Label text="Primary View" />
-      <Button fx:id="primaryButton" text="Switch to Secondary View" onAction="#switchToSecondary"/>
+      <VBox layoutX="14.0" layoutY="363.0" prefHeight="150.0" prefWidth="60.0" style="-fx-background-color: #d6c3ef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+         <children>
+            <Button fx:id="oneButton" mnemonicParsing="false" onMouseClicked="#oneButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="fourButton" mnemonicParsing="false" onMouseClicked="#fourButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="seventButton" mnemonicParsing="false" onMouseClicked="#sevenButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="7">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox layoutX="79.0" layoutY="373.0" prefHeight="150.0" prefWidth="60.0" style="-fx-background-color: #d6c3ef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0">
+         <children>
+            <Button fx:id="twoButton" mnemonicParsing="false" onMouseClicked="#twoButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="fiveButton" mnemonicParsing="false" onMouseClicked="#fiveButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="eightButton" mnemonicParsing="false" onMouseClicked="#eightButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="8">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox layoutX="89.0" layoutY="383.0" prefHeight="150.0" prefWidth="60.0" style="-fx-background-color: #d6c3ef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="120.0">
+         <children>
+            <Button fx:id="threeButton" mnemonicParsing="false" onMouseClicked="#threeButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="sixButton" mnemonicParsing="false" onMouseClicked="#sixButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="6">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="nineButton" mnemonicParsing="false" onMouseClicked="#nineButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox layoutX="99.0" layoutY="393.0" prefHeight="150.0" prefWidth="60.0" style="-fx-background-color: #d6c3ef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="185.0">
+         <children>
+            <Button fx:id="zeroButton" mnemonicParsing="false" onMouseDragged="#zeroButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #FFFFCC; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="slashButton" mnemonicParsing="false" onMouseClicked="#slashButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #e6ffcc; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="/">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="pointButton" mnemonicParsing="false" onMouseClicked="#pointButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #e6ffcc; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text=".">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox layoutX="99.0" layoutY="393.0" prefHeight="150.0" prefWidth="60.0" style="-fx-background-color: #d6c3ef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="245.0">
+         <children>
+            <Button fx:id="plusButton" mnemonicParsing="false" onMouseClicked="#plusButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #e6ffcc; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="+">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="starButton" mnemonicParsing="false" onMouseClicked="#starButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #e6ffcc; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="*">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#xButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #e6ffcc; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="x" fx:id="xButton">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox layoutX="99.0" layoutY="393.0" prefHeight="150.0" prefWidth="60.0" style="-fx-background-color: #d6c3ef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="305.0">
+         <children>
+            <Button fx:id="minusButton" mnemonicParsing="false" onMouseClicked="#minusButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #e6ffcc; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="-">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="risePowerButton" mnemonicParsing="false" onMouseClicked="#risePowerButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #e6ffcc; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="^">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="delButton" mnemonicParsing="false" onMouseClicked="#delButtonAction" prefHeight="50.0" prefWidth="68.0" style="-fx-background-color: #e6ffcc; -fx-border-color: #000000; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-insets: -0.5;" text="del">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <SplitPane dividerPositions="0.5013774104683195" layoutY="204.0" prefHeight="160.0" prefWidth="365.0" style="-fx-background-color: #80b3ff;" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="182.5" style="-fx-background-color: #d6c3ef;">
+               <children>
+                  <Button fx:id="multiplicateButton" layoutX="-2.0" mnemonicParsing="false" onMouseClicked="#multiplicateButtonAction" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: #b3d1ff; -fx-background-radius: 5; -fx-border-color: #000000; -fx-border-radius: 5; -fx-border-width: 1.2; -fx-border-insets: -0.5;" text="Multiplicate" AnchorPane.bottomAnchor="108.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="addButton" layoutY="108.0" mnemonicParsing="false" onMouseClicked="#addButtonAction" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: #b3d1ff; -fx-background-radius: 5; -fx-border-color: #000000; -fx-border-radius: 5; -fx-border-width: 1.2; -fx-border-insets: -0.5;" text="Add" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="108.0" />
+                  <Button fx:id="divideButton" layoutY="54.0" mnemonicParsing="false" onMouseClicked="#divideButtonAction" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: #b3d1ff; -fx-background-radius: 5; -fx-border-color: #000000; -fx-border-radius: 5; -fx-border-width: 1.2; -fx-border-insets: -0.5;" text="Divide" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="169.0" style="-fx-background-color: #d6c3ef;">
+               <children>
+                  <Button fx:id="subtractButton" mnemonicParsing="false" onMouseClicked="#subtractButtonAction" prefHeight="50.0" prefWidth="178.0" style="-fx-background-color: #b3d1ff; -fx-background-radius: 5; -fx-border-color: #000000; -fx-border-radius: 5; -fx-border-width: 1.2; -fx-border-insets: -0.5;" stylesheets="@Style.css" text="Subtract" AnchorPane.bottomAnchor="106.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="derivationButton" depthTest="ENABLE" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#derivationButtonAction" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: #b3d1ff; -fx-background-radius: 5; -fx-border-color: #000000; -fx-border-radius: 5; -fx-border-width: 1.2; -fx-border-insets: -0.5;" styleClass="button" stylesheets="@Style.css" text="Derivation" AnchorPane.bottomAnchor="54.0" AnchorPane.topAnchor="56.0" />
+                  <Button fx:id="integrationButton" depthTest="ENABLE" layoutY="108.0" mnemonicParsing="false" onMouseClicked="#integrationButtonAction" prefHeight="50.0" prefWidth="179.0" style="-fx-background-color: #b3d1ff; -fx-background-radius: 5; -fx-border-color: #000000; -fx-border-radius: 5; -fx-border-width: 1.2; -fx-border-insets: -0.5;" styleClass="button" stylesheets="@Style.css" text="Integration" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="108.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <Text layoutX="63.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Polynomiala Calculator" wrappingWidth="244.990234375" AnchorPane.topAnchor="14.1015625">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="10.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Polynomial      =" wrappingWidth="172.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="6.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Second Polynomial  =" wrappingWidth="179.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="firstPolynomial" layoutX="183.0" layoutY="87.0" prefHeight="25.0" prefWidth="178.0" />
+      <TextField fx:id="secondPolynomial" layoutX="183.0" layoutY="121.0" prefHeight="25.0" prefWidth="178.0" />
+      <Text layoutX="96.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer =" textAlignment="CENTER" wrappingWidth="87.7421875">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="answerField" disable="true" layoutX="183.0" layoutY="169.0" prefHeight="25.0" prefWidth="178.0" />
    </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+</AnchorPane>
