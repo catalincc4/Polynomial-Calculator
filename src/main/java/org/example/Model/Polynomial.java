@@ -1,27 +1,22 @@
-package org.example.model;
+package org.example.Model;
 
-import org.example.Validation.MatcheException;
+import org.example.Exception.ArithmeticallyException;
+import org.example.Exception.FormatException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static java.lang.String.format;
 
 public class Polynomial {
     private List<Monomial> monomialList;
 
-    public List<Monomial> getMonomialList() {
-        return monomialList;
-    }
-
     public Polynomial(List<Monomial> monomialList) {
         this.monomialList = monomialList;
     }
 
-    public Polynomial(String polynomial) throws MatcheException {
+    public Polynomial(String polynomial) throws FormatException {
         if (!Objects.equals(polynomial, " ")) {
             monomialList = new ArrayList<>();
             List<MonomSplit> monomSplits = splitPolynomial(polynomial);
@@ -31,13 +26,6 @@ public class Polynomial {
         }
     }
 
-    public void test(String match) throws MatcheException {
-        Pattern pattern = Pattern.compile("((\\d*?)[*]{0,1}X{0,1}(\\^{0,1}\\d*?)[\\+-]{0,1}){1,10000}");
-        Matcher matcher = pattern.matcher(match);
-        if (!matcher.matches()) {
-            throw new MatcheException("Format gresit");
-        }
-    }
 
     public List<MonomSplit> splitPolynomial(String polynomial) {
         int i = 0;
@@ -92,6 +80,7 @@ public class Polynomial {
             }
         }
         resultPolynomial.monomialList.sort(new Monomial.SortByExp());
+        resultPolynomial.monomialList = compressPolynomial(resultPolynomial.monomialList);
         return resultPolynomial;
     }
 
@@ -124,6 +113,7 @@ public class Polynomial {
             }
         }
         resultPolynomial.monomialList.sort(new Monomial.SortByExp());
+        resultPolynomial.monomialList = compressPolynomial(resultPolynomial.monomialList);
         return resultPolynomial;
     }
 
@@ -153,20 +143,44 @@ public class Polynomial {
         monomialList.sort(new Monomial.SortByExp());
     }
 
-    public Polynomial multiplicate(Polynomial secondPolynomial){
+    public Polynomial multiplicate(Polynomial secondPolynomial) {
         List<Monomial> multipicatedList = new ArrayList<>();
-      for( Monomial firstMonomial : monomialList) {
-          for (Monomial secondMonomial : secondPolynomial.monomialList) {
-              Monomial monomial = new Monomial(firstMonomial.getExp() + secondMonomial.getExp(), firstMonomial.getCoef() * secondMonomial.getCoef());
-              multipicatedList.add(monomial);
-          }
-          System.out.println(toString());
-      }
-      monomialList = compressPolynomial(multipicatedList);
-       monomialList.sort(new Monomial.SortByExp());
-      return this;
+        for (Monomial firstMonomial : monomialList) {
+            for (Monomial secondMonomial : secondPolynomial.monomialList) {
+                Monomial monomial = new Monomial(firstMonomial.getExp() + secondMonomial.getExp(), firstMonomial.getCoef() * secondMonomial.getCoef());
+                multipicatedList.add(monomial);
+            }
+        }
+        monomialList = compressPolynomial(multipicatedList);
+        monomialList.sort(new Monomial.SortByExp());
+        return this;
     }
 
+    public List<Polynomial> divide(Polynomial secondPolynomial) throws ArithmeticallyException {
+        List<Polynomial> polynomialList = new ArrayList<>();
+        secondPolynomial.monomialList.sort(new Monomial.SortByExp());
+        secondPolynomial.monomialList = compressPolynomial(secondPolynomial.monomialList);
+        if (secondPolynomial.monomialList.size() == 0 || secondPolynomial.monomialList.get(0).getCoef() == 0) {
+            throw new ArithmeticallyException("Impartitorul trebuie sa fie diferit de 0");
+        } else {
+            monomialList.sort(new Monomial.SortByExp());
+            Polynomial quotient = new Polynomial(new ArrayList<>());
+            Polynomial remainder = this;
+            float secondPolynomialExp = secondPolynomial.monomialList.get(0).getExp();
+            float secondPolynomialCoef = secondPolynomial.monomialList.get(0).getCoef();
+            while (remainder.monomialList.get(0).getCoef() != 0 && remainder.monomialList.get(0).getExp() >= secondPolynomial.monomialList.get(0).getExp()) {
+                float remainderExp = remainder.monomialList.get(0).getExp();
+                float remainderCoef = remainder.monomialList.get(0).getCoef();
+                Polynomial t = new Polynomial(new ArrayList<>());
+                t.monomialList.add(new Monomial(remainderExp - secondPolynomialExp, remainderCoef / secondPolynomialCoef));
+                quotient = quotient.add(t);
+                remainder = remainder.subtract(t.multiplicate(secondPolynomial));
+            }
+            polynomialList.add(quotient);
+            polynomialList.add(remainder);
+        }
+        return polynomialList;
+    }
 
     public String toString() {
         String polynomialString = "";
@@ -181,7 +195,7 @@ public class Polynomial {
                 polynomialString += "+";
             }
 
-            if (z != 0 && z != 1) {
+            if (z != 0 && z != 1 && x > 0) {
                 if (z - (int) z > 0.0001 || (int) z - z > 0.0001)
                     polynomialString += format("%.2f", z);
                 else if (z == -1)
@@ -196,6 +210,12 @@ public class Polynomial {
 
             if (x == 1 && z != 0) {
                 polynomialString += "X";
+            }
+            if (x == 0 && z != 0) {
+                if (z - (int) z > 0.0001 || (int) z - z > 0.0001)
+                    polynomialString += format("%.2f", z);
+                else
+                    polynomialString += (int) z;
             }
             i++;
         }
@@ -217,9 +237,14 @@ public class Polynomial {
                         j++;
 
                 }
-                i++;
+                if (monomialList.get(i).getCoef() == 0)
+
+                    monomialList.remove(i);
+                else
+                    i++;
             }
         }
+
         return monomialList;
     }
 }

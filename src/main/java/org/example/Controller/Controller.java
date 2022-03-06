@@ -1,18 +1,22 @@
-package org.example.controller;
+package org.example.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import org.example.Validation.MatcheException;
-import org.example.model.Polynomial;
+import org.example.Exception.ArithmeticallyException;
+import org.example.Exception.FormatException;
+import org.example.Model.Polynomial;
+import org.example.View.ModelView;
+
+import java.util.List;
 
 
 public class Controller {
 
     private String polynomToWrite = "firstPolynom";
-
+    private ModelView modelView;
     @FXML
     private Button addButton;
 
@@ -96,6 +100,11 @@ public class Controller {
 
     @FXML
     private Text errorField;
+
+    @FXML
+    public void initialize(){
+        modelView = new ModelView();
+    }
 
     @FXML
     void oneButtonAction(MouseEvent event) {
@@ -183,6 +192,7 @@ public class Controller {
         polynomPicker().appendText("^");
     }
 
+
     @FXML
     void delButtonAction(MouseEvent event) {
         int n = polynomPicker().getText().length();
@@ -194,14 +204,13 @@ public class Controller {
     void addButtonAction(MouseEvent event) {
 
         try {
-            Polynomial polynomial = new Polynomial(" ");
             errorField.setText(" ");
-            polynomial.test(firstPolynomial.getText());
-            polynomial.test(secondPolynomial.getText());
-            polynomial = new Polynomial(firstPolynomial.getText());
+            modelView.test(firstPolynomial.getText());
+            modelView.test(secondPolynomial.getText());
+            Polynomial polynomial = new Polynomial(firstPolynomial.getText());
             Polynomial polynomial1 = new Polynomial(secondPolynomial.getText());
             answerField.setText(polynomial.add(polynomial1).toString());
-        } catch (MatcheException e) {
+        } catch (FormatException e) {
             errorField.setText(e.getMessage());
         }
     }
@@ -209,19 +218,31 @@ public class Controller {
     @FXML
     void divideButtonAction(MouseEvent event) {
 
+        try {
+            errorField.setText(" ");
+            modelView.test(firstPolynomial.getText());
+            modelView.test(secondPolynomial.getText());
+            Polynomial polynomial = new Polynomial(firstPolynomial.getText());
+            Polynomial polynomial1 = new Polynomial(secondPolynomial.getText());
+            List<Polynomial> polynomialList = polynomial.divide(polynomial1);
+            String result ="Q=" + polynomialList.get(0).toString() + "; R=" + polynomialList.get(1).toString();
+            answerField.setText(result);
+        } catch (FormatException | ArithmeticallyException e) {
+            errorField.setText(e.getMessage());
+        }
+
     }
 
     @FXML
     void multiplicateButtonAction(MouseEvent event) {
         try {
-            Polynomial polynomial = new Polynomial(" ");
             errorField.setText(" ");
-            polynomial.test(firstPolynomial.getText());
-            polynomial.test(secondPolynomial.getText());
-            polynomial = new Polynomial(firstPolynomial.getText());
+            modelView.test(firstPolynomial.getText());
+            modelView.test(secondPolynomial.getText());
+            Polynomial polynomial = new Polynomial(firstPolynomial.getText());
             Polynomial polynomial1 = new Polynomial(secondPolynomial.getText());
             answerField.setText(polynomial.multiplicate(polynomial1).toString());
-        } catch (MatcheException e) {
+        } catch (FormatException e) {
             errorField.setText(e.getMessage());
         }
 
@@ -230,14 +251,13 @@ public class Controller {
     @FXML
     void subtractButtonAction(MouseEvent event) {
         try {
-            Polynomial polynomial = new Polynomial(" ");
             errorField.setText(" ");
-            polynomial.test(firstPolynomial.getText());
-            polynomial.test(secondPolynomial.getText());
-            polynomial = new Polynomial(firstPolynomial.getText());
+            modelView.test(firstPolynomial.getText());
+            modelView.test(secondPolynomial.getText());
+            Polynomial polynomial = new Polynomial(firstPolynomial.getText());
             Polynomial polynomial1 = new Polynomial(secondPolynomial.getText());
             answerField.setText(polynomial.subtract(polynomial1).toString());
-        } catch (MatcheException e) {
+        } catch (FormatException e) {
             errorField.setText(e.getMessage());
         }
     }
@@ -247,12 +267,11 @@ public class Controller {
 
         try {
             errorField.setText(" ");
-            Polynomial polynomial = new Polynomial(" ");
-            polynomial.test(firstPolynomial.getText());
-            polynomial = new Polynomial(firstPolynomial.getText());
+            modelView.test(firstPolynomial.getText());
+            Polynomial polynomial = new Polynomial(firstPolynomial.getText());
             polynomial.derivation();
             answerField.setText(polynomial.toString());
-        } catch (MatcheException e) {
+        } catch (FormatException e) {
             errorField.setText(e.getMessage());
         }
     }
@@ -261,12 +280,11 @@ public class Controller {
     void integrationButtonAction(MouseEvent event) {
         try {
             errorField.setText(" ");
-            Polynomial polynomial = new Polynomial(" ");
-            polynomial.test(firstPolynomial.getText());
-            polynomial = new Polynomial(firstPolynomial.getText());
+            modelView.test(firstPolynomial.getText());
+            Polynomial polynomial = new Polynomial(firstPolynomial.getText());
             polynomial.integration();
             answerField.setText(polynomial.toString());
-        } catch (MatcheException e) {
+        } catch (FormatException e) {
             errorField.setText(e.getMessage());
         }
     }

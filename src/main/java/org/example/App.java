@@ -4,15 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.example.model.Monomial;
-import org.example.model.Polynomial;
+import org.example.Controller.Controller;
 
 import java.io.IOException;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
 
     private static Scene scene;
@@ -21,7 +18,11 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("primary"));
         stage.setScene(scene);
+        stage.setTitle("Polynomial Calculator");
+        stage.getIcons().add(new Image("D:\\PT2022_30222_Calin_Catalin_Assigment_1\\src\\main\\resources\\org\\example\\icon.png"));
         stage.show();
+        Controller controller = new Controller();
+        controller.initialize();
     }
 
     public static void setRoot(String fxml) throws IOException {

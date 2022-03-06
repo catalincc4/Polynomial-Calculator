@@ -1,7 +1,7 @@
-package org.example.model;
+package org.example.Model;
 
 
-import org.example.Validation.MatcheException;
+import org.example.Exception.FormatException;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -45,10 +45,10 @@ public class Monomial {
         this.coef = coef;
     }
 
-    public Monomial(String monom, int x) throws MatcheException {
+    public Monomial(String monom, int x) throws FormatException {
         int n = monomialPatternChooser(monom);
         if (n == -1)
-            throw new MatcheException("Format gresit");
+            throw new FormatException("Format gresit");
         if (n == 0) {
             exp = 0;
             coef = x * Integer.parseInt(monom);
@@ -76,7 +76,7 @@ public class Monomial {
         patterns[1] = Pattern.compile("(\\d{1,100})X");
         patterns[2] = Pattern.compile("X");
         patterns[3] = Pattern.compile("X(\\^{1,1})(\\d{1,100})");
-        patterns[4] = Pattern.compile("(\\d{1,100})X(\\^{1,1})(\\d{1,100})");
+        patterns[4] = Pattern.compile("(\\d{1,100}X(\\^{1,1})(\\d{1,100}))");
         patterns[5] = Pattern.compile("(\\d{1,100})(\\*{1,100})X(\\^{1,1})(\\d{1,100})");
         int i = 0;
         while (i < 6) {
@@ -92,7 +92,7 @@ public class Monomial {
     public String getCoefNumber(String monom) {
         String stringCoef = new String();
         int i = 0;
-        while (monom.charAt(i) >= '0' && monom.charAt(i) <= '9')
+        while (monom.charAt(i) >= '0' && monom.charAt(i) <= '9' || monom.charAt(i) == '.')
             stringCoef += monom.charAt(i++);
         return stringCoef;
     }

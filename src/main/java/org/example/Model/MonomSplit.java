@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.Model;
 
 public class MonomSplit {
     private String monomial;
