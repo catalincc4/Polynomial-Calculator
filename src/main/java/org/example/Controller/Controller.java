@@ -12,10 +12,9 @@ import org.example.View.ModelView;
 
 import java.util.List;
 
-
 public class Controller {
 
-    private String polynomToWrite = "firstPolynom";
+    private String polynomToWrite;
     private ModelView modelView;
     @FXML
     private Button addButton;
@@ -102,8 +101,9 @@ public class Controller {
     private Text errorField;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         modelView = new ModelView();
+        polynomToWrite = "firstPolynom";
     }
 
     @FXML
@@ -225,7 +225,7 @@ public class Controller {
             Polynomial polynomial = new Polynomial(firstPolynomial.getText());
             Polynomial polynomial1 = new Polynomial(secondPolynomial.getText());
             List<Polynomial> polynomialList = polynomial.divide(polynomial1);
-            String result ="Q=" + polynomialList.get(0).toString() + "; R=" + polynomialList.get(1).toString();
+            String result = "Q=" + polynomialList.get(0).toString() + "; R=" + polynomialList.get(1).toString();
             answerField.setText(result);
         } catch (FormatException | ArithmeticallyException e) {
             errorField.setText(e.getMessage());

@@ -1,5 +1,6 @@
 package org.example.Model;
 
+import org.example.Controller.Controller;
 import org.example.Exception.ArithmeticallyException;
 import org.example.Exception.FormatException;
 
@@ -10,6 +11,7 @@ import java.util.Objects;
 import static java.lang.String.format;
 
 public class Polynomial {
+
     private List<Monomial> monomialList;
 
     public Polynomial(List<Monomial> monomialList) {
@@ -19,33 +21,33 @@ public class Polynomial {
     public Polynomial(String polynomial) throws FormatException {
         if (!Objects.equals(polynomial, " ")) {
             monomialList = new ArrayList<>();
-            List<MonomSplit> monomSplits = splitPolynomial(polynomial);
-            for (MonomSplit monomSplit : monomSplits) {
-                monomialList.add(new Monomial(monomSplit.getMonomial(), monomSplit.getX()));
+            List<MonomialSplit> monomSplits = splitPolynomial(polynomial);
+            for (MonomialSplit monomSplit : monomSplits) {
+                monomialList.add(new Monomial(monomSplit.getMonomial(), monomSplit.getTermSign()));
             }
         }
     }
 
 
-    public List<MonomSplit> splitPolynomial(String polynomial) {
+    public List<MonomialSplit> splitPolynomial(String polynomial) {
         int i = 0;
-        int s = 1;
-        List<MonomSplit> monomialList = new ArrayList<>();
+        int termSign = 1;
+        List<MonomialSplit> monomialList = new ArrayList<>();
         String a = "";
         while (i < polynomial.length()) {
             if (((polynomial.charAt(i) == '-' || polynomial.charAt(i) == '+') && i > 0)) {
-                monomialList.add(new MonomSplit(a, s));
+                monomialList.add(new MonomialSplit(a, termSign));
                 a = "";
             } else if (polynomial.charAt(i) != '-')
                 a += polynomial.charAt(i);
 
             if (i == polynomial.length() - 1) {
-                monomialList.add(new MonomSplit(a, s));
+                monomialList.add(new MonomialSplit(a, termSign));
             }
             if (polynomial.charAt(i) == '-') {
-                s = -1;
+                termSign = -1;
             } else if (polynomial.charAt(i) == '+')
-                s = 1;
+                termSign = 1;
 
             i++;
         }
@@ -59,8 +61,8 @@ public class Polynomial {
         for (Monomial firstMonomial : monomialList) {
             int flag = 0;
             for (Monomial secondMonomial : secondPolynomial.monomialList) {
-                if (firstMonomial.getExp() == (secondMonomial.getExp())) {
-                    firstMonomial.setCoef(firstMonomial.getCoef() + secondMonomial.getCoef());
+                if (firstMonomial.getExponent() == (secondMonomial.getExponent())) {
+                    firstMonomial.setCoefficient(firstMonomial.getCoefficient() + secondMonomial.getCoefficient());
                     flag = 1;
                     resultPolynomial.monomialList.add(firstMonomial);
                 }
@@ -72,14 +74,14 @@ public class Polynomial {
         for (Monomial secondMonomial : secondPolynomial.monomialList) {
             int flag = 0;
             for (Monomial firstMonomial : monomialList) {
-                if (firstMonomial.getExp() == (secondMonomial.getExp()))
+                if (firstMonomial.getExponent() == (secondMonomial.getExponent()))
                     flag = 1;
             }
             if (flag == 0) {
                 resultPolynomial.monomialList.add(secondMonomial);
             }
         }
-        resultPolynomial.monomialList.sort(new Monomial.SortByExp());
+        resultPolynomial.monomialList.sort(new Monomial.SortByExponent());
         resultPolynomial.monomialList = compressPolynomial(resultPolynomial.monomialList);
         return resultPolynomial;
     }
@@ -91,8 +93,8 @@ public class Polynomial {
         for (Monomial firstMonomial : monomialList) {
             int flag = 0;
             for (Monomial secondMonomial : secondPolynomial.monomialList) {
-                if (firstMonomial.getExp() == (secondMonomial.getExp())) {
-                    firstMonomial.setCoef(firstMonomial.getCoef() - secondMonomial.getCoef());
+                if (firstMonomial.getExponent() == (secondMonomial.getExponent())) {
+                    firstMonomial.setCoefficient(firstMonomial.getCoefficient() - secondMonomial.getCoefficient());
                     flag = 1;
                     resultPolynomial.monomialList.add(firstMonomial);
                 }
@@ -104,15 +106,15 @@ public class Polynomial {
         for (Monomial secondMonomial : secondPolynomial.monomialList) {
             int flag = 0;
             for (Monomial firstMonomial : monomialList) {
-                if (firstMonomial.getExp() == (secondMonomial.getExp()))
+                if (firstMonomial.getExponent() == (secondMonomial.getExponent()))
                     flag = 1;
             }
             if (flag == 0) {
-                secondMonomial.setCoef(-secondMonomial.getCoef());
+                secondMonomial.setCoefficient(-secondMonomial.getCoefficient());
                 resultPolynomial.monomialList.add(secondMonomial);
             }
         }
-        resultPolynomial.monomialList.sort(new Monomial.SortByExp());
+        resultPolynomial.monomialList.sort(new Monomial.SortByExponent());
         resultPolynomial.monomialList = compressPolynomial(resultPolynomial.monomialList);
         return resultPolynomial;
     }
@@ -121,56 +123,56 @@ public class Polynomial {
         monomialList = compressPolynomial(monomialList);
         int i = 0;
         while (i < monomialList.size()) {
-            float n = monomialList.get(i).getExp();
-            float m = monomialList.get(i).getCoef();
-            monomialList.get(i).setCoef(n * m);
-            monomialList.get(i).setExp(n - 1);
+            float n = monomialList.get(i).getExponent();
+            float m = monomialList.get(i).getCoefficient();
+            monomialList.get(i).setCoefficient(n * m);
+            monomialList.get(i).setExponent(n - 1);
             i++;
         }
-        monomialList.sort(new Monomial.SortByExp());
+        monomialList.sort(new Monomial.SortByExponent());
     }
 
     public void integration() {
         monomialList = compressPolynomial(monomialList);
         int i = 0;
         while (i < monomialList.size()) {
-            float n = monomialList.get(i).getExp();
-            float m = monomialList.get(i).getCoef();
-            monomialList.get(i).setCoef(m / (n + 1));
-            monomialList.get(i).setExp(n + 1);
+            float n = monomialList.get(i).getExponent();
+            float m = monomialList.get(i).getCoefficient();
+            monomialList.get(i).setCoefficient(m / (n + 1));
+            monomialList.get(i).setExponent(n + 1);
             i++;
         }
-        monomialList.sort(new Monomial.SortByExp());
+        monomialList.sort(new Monomial.SortByExponent());
     }
 
     public Polynomial multiplicate(Polynomial secondPolynomial) {
         List<Monomial> multipicatedList = new ArrayList<>();
         for (Monomial firstMonomial : monomialList) {
             for (Monomial secondMonomial : secondPolynomial.monomialList) {
-                Monomial monomial = new Monomial(firstMonomial.getExp() + secondMonomial.getExp(), firstMonomial.getCoef() * secondMonomial.getCoef());
+                Monomial monomial = new Monomial(firstMonomial.getExponent() + secondMonomial.getExponent(), firstMonomial.getCoefficient() * secondMonomial.getCoefficient());
                 multipicatedList.add(monomial);
             }
         }
         monomialList = compressPolynomial(multipicatedList);
-        monomialList.sort(new Monomial.SortByExp());
+        monomialList.sort(new Monomial.SortByExponent());
         return this;
     }
 
     public List<Polynomial> divide(Polynomial secondPolynomial) throws ArithmeticallyException {
         List<Polynomial> polynomialList = new ArrayList<>();
-        secondPolynomial.monomialList.sort(new Monomial.SortByExp());
+        secondPolynomial.monomialList.sort(new Monomial.SortByExponent());
         secondPolynomial.monomialList = compressPolynomial(secondPolynomial.monomialList);
-        if (secondPolynomial.monomialList.size() == 0 || secondPolynomial.monomialList.get(0).getCoef() == 0) {
+        if (secondPolynomial.monomialList.size() == 0 || secondPolynomial.monomialList.get(0).getCoefficient() == 0) {
             throw new ArithmeticallyException("Impartitorul trebuie sa fie diferit de 0");
         } else {
-            monomialList.sort(new Monomial.SortByExp());
+            monomialList.sort(new Monomial.SortByExponent());
             Polynomial quotient = new Polynomial(new ArrayList<>());
             Polynomial remainder = this;
-            float secondPolynomialExp = secondPolynomial.monomialList.get(0).getExp();
-            float secondPolynomialCoef = secondPolynomial.monomialList.get(0).getCoef();
-            while (remainder.monomialList.get(0).getCoef() != 0 && remainder.monomialList.get(0).getExp() >= secondPolynomial.monomialList.get(0).getExp()) {
-                float remainderExp = remainder.monomialList.get(0).getExp();
-                float remainderCoef = remainder.monomialList.get(0).getCoef();
+            float secondPolynomialExp = secondPolynomial.monomialList.get(0).getExponent();
+            float secondPolynomialCoef = secondPolynomial.monomialList.get(0).getCoefficient();
+            while (remainder.monomialList.get(0).getCoefficient() != 0 && remainder.monomialList.get(0).getExponent() >= secondPolynomial.monomialList.get(0).getExponent()) {
+                float remainderExp = remainder.monomialList.get(0).getExponent();
+                float remainderCoef = remainder.monomialList.get(0).getCoefficient();
                 Polynomial t = new Polynomial(new ArrayList<>());
                 t.monomialList.add(new Monomial(remainderExp - secondPolynomialExp, remainderCoef / secondPolynomialCoef));
                 quotient = quotient.add(t);
@@ -185,13 +187,13 @@ public class Polynomial {
     public String toString() {
         String polynomialString = "";
         int i = 0;
-        int n = monomialList.size();
+        int listSize = monomialList.size();
 
         for (Monomial monomial : monomialList) {
-            float x = monomial.getExp();
-            float z = monomial.getCoef();
+            float x = monomial.getExponent();
+            float z = monomial.getCoefficient();
 
-            if (i > 0 && i < n && z > 0) {
+            if (i > 0 && i < listSize && z > 0) {
                 polynomialString += "+";
             }
 
@@ -230,14 +232,14 @@ public class Polynomial {
                 int j = 0;
                 while (j < monomialList.size()) {
                     Monomial monomial = monomialList.get(j);
-                    if (monomial1.getExp() == monomial.getExp() && !monomial.equals(monomial1)) {
-                        monomialList.get(i).setCoef(monomial1.getCoef() + monomial.getCoef());
+                    if (monomial1.getExponent() == monomial.getExponent() && !monomial.equals(monomial1)) {
+                        monomialList.get(i).setCoefficient(monomial1.getCoefficient() + monomial.getCoefficient());
                         monomialList.remove(j);
                     } else
                         j++;
 
                 }
-                if (monomialList.get(i).getCoef() == 0)
+                if (monomialList.get(i).getCoefficient() == 0)
 
                     monomialList.remove(i);
                 else

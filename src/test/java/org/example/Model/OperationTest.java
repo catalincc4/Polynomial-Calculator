@@ -49,18 +49,18 @@ public class OperationTest {
     @Test
     public void derivationTest() throws FormatException{
         Polynomial firstPolynomial = new Polynomial("X^3-2X^2+3X-1");
-        Polynomial resulPolynomial = new Polynomial("3X^2-4X+3");
+        Polynomial resultPolynomial = new Polynomial("3X^2-4X+3");
         firstPolynomial.derivation();
-        assertTrue(firstPolynomial.toString().equals(resulPolynomial.toString()),
+        assertTrue(firstPolynomial.toString().equals(resultPolynomial.toString()),
                 "The result of derivation X^3-2X^2+3X-1 is 3X^2-4X+3");
 
     }
     @Test
     public void integrationTest() throws FormatException{
         Polynomial firstPolynomial = new Polynomial("4X^3-3X^2+2X-1");
-        Polynomial resulPolynomial = new Polynomial("X^4-X^3+X^2-X");
+        Polynomial resultPolynomial = new Polynomial("X^4-X^3+X^2-X");
         firstPolynomial.integration();
-        assertTrue(firstPolynomial.toString().equals(resulPolynomial.toString()),
+        assertTrue(firstPolynomial.toString().equals(resultPolynomial.toString()),
                 "The result of integration 4X^3-3X^2+2X-1 is X^4-X^3+X^2-X");
 
     }
