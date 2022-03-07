@@ -158,7 +158,7 @@ public class Polynomial {
         return this;
     }
 
-    public List<Polynomial> divide(Polynomial secondPolynomial) throws ArithmeticallyException {
+    public List<Polynomial> divide(Polynomial secondPolynomial) throws ArithmeticallyException, FormatException {
         List<Polynomial> polynomialList = new ArrayList<>();
         secondPolynomial.monomialList.sort(new Monomial.SortByExponent());
         secondPolynomial.monomialList = compressPolynomial(secondPolynomial.monomialList);
@@ -166,7 +166,7 @@ public class Polynomial {
             throw new ArithmeticallyException("Impartitorul trebuie sa fie diferit de 0");
         } else {
             monomialList.sort(new Monomial.SortByExponent());
-            Polynomial quotient = new Polynomial(new ArrayList<>());
+            Polynomial quotient = new Polynomial("0");
             Polynomial remainder = this;
             float secondPolynomialExp = secondPolynomial.monomialList.get(0).getExponent();
             float secondPolynomialCoef = secondPolynomial.monomialList.get(0).getCoefficient();
